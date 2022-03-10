@@ -3,12 +3,12 @@ import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 
 
+
 type MyPostPropsType = {
     message: string
     likesCounts: number
 }
-
-const MyPosts = () => {
+const MyPosts: React.FC<MyPostPropsType> = (props) => {
     return (
         <div>
             My posts
@@ -18,8 +18,12 @@ const MyPosts = () => {
 
             </div>
             <div className={s.posts}>
-                <Post message={'Hi, how are you?'} likesCounts={15}/>
-                <Post message={"It's my first post"} likesCounts={25}/>
+
+                <Post message='Hi, how are you?' likesCounts={15}/>
+                <Post message="It's my first post" likesCounts={25}/>
+
+
+
             </div>
         </div>
 
