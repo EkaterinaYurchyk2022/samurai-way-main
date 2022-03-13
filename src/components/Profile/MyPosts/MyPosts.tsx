@@ -30,5 +30,5 @@ const MyPosts = (props) => {
 
     );
 };
-
+//add smth
 export default MyPosts;
