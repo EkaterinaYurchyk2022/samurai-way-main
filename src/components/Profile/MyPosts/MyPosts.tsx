@@ -7,11 +7,13 @@ type MyPostPropsType = {
     message: string
     likesCounts: number
 }
+
 const MyPosts = () => {
-    let postData = [
+    let posts = [
         {id: 1, message: "Hi, how are you?", likesCounts: 15},
         {id: 2, message: "It's my first post", likesCounts: 25}
     ]
+    let postsElements = posts.map(p => <Post message={p.message} likesCounts={p.likesCounts}/>)
     return (
         <div className={s.postsBlock}>
             <h3> My posts </h3>
@@ -25,8 +27,7 @@ const MyPosts = () => {
             </div>
 
             <div className={s.posts}>
-                <Post message={postData[0].message} likesCounts={postData[0].likesCounts}/>
-                <Post message={postData[1].message} likesCounts={postData[1].likesCounts}/>
+                {postsElements}
             </div>
         </div>
     )
