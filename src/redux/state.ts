@@ -1,6 +1,51 @@
-import exp from "constants";
+import {rerenderEntireTree} from "../render";
 
-let state = {
+
+type MessageType = {
+    id: number
+    message: string
+}
+
+type DialogsType = {
+    id: number
+    name: string
+}
+
+export type PostType = {
+    id: number
+    message: string
+    likesCounts: number
+}
+
+export type ProfilePageType = {
+    posts: Array<PostType>
+}
+
+export type DialogsPageType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessageType>
+
+}
+
+type SitebarType = {
+
+}
+
+export type StateType = {
+    profilePage: ProfilePageType
+    dialogsPage: DialogsPageType
+    }
+
+   export let addPost = (postMessage)=> {
+    let newPost = {
+        id: 5,
+        message: postMessage,
+        likesCounts: 0
+    }
+    state.profilePage.posts.push(newPost);
+    rerenderEntireTree(state)
+    }
+let state: StateType = {
     profilePage: {
         posts: [
             {id: 1, message: "Hi, how are you?", likesCounts: 15},
