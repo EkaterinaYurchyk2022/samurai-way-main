@@ -36,8 +36,8 @@ export type StateType = {
     dialogsPage: DialogsPageType
     }
 
-   export let addPost = (postMessage)=> {
-    let newPost = {
+   export const addPost = (postMessage: string)=> {
+    const newPost = {
         id: 5,
         message: postMessage,
         likesCounts: 0
