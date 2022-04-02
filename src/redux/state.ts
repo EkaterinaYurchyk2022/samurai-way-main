@@ -1,5 +1,3 @@
-import {rerenderEntireTree} from "../render";
-
 
 type MessageType = {
     id: number
@@ -27,30 +25,24 @@ export type DialogsPageType = {
 
 }
 
-type SitebarType = {
-
-}
+type SidebarType = {}
 
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    }
+}
 
-   export const addPost = (postMessage: string)=> {
-    const newPost = {
-        id: 5,
-        message: postMessage,
-        likesCounts: 0
-    }
-    state.profilePage.posts.push(newPost);
-    rerenderEntireTree(state)
-    }
+let rerenderEntireTree = () => {
+    console.log("State changed")
+}
+
 let state: StateType = {
     profilePage: {
         posts: [
             {id: 1, message: "Hi, how are you?", likesCounts: 15},
             {id: 2, message: "It's my first post", likesCounts: 25}
-        ]
+        ],
+        newPostText: "it-kamasutra.com"
 
     },
     dialogsPage: {
@@ -72,6 +64,30 @@ let state: StateType = {
         ]
     }
 
-    }
+}
 
-    export default state
+window.state = state
+
+
+export const addPost = () => {
+    const newPost = {
+        id: 5,
+        message: state.profilePage.newPostText,
+        likesCounts: 0
+    }
+    state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = ""
+    rerenderEntireTree(state)
+}
+
+export const updateNewPostText = (newText) => {
+    state.profilePage.newPostText
+    rerenderEntireTree(state)
+}
+
+export const subscribe = (observer) => {
+    rerenderEntireTree = observer
+}
+
+
+export default state
