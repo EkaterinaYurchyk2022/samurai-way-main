@@ -1,4 +1,3 @@
-
 type MessageType = {
     id: number
     message: string
@@ -15,8 +14,19 @@ export type PostType = {
     likesCounts: number
 }
 
+export type FriendType={
+id: number
+name:string
+}
+
+export type FriendsType = {
+    friends: Array<FriendType>
+}
+
+
 export type ProfilePageType = {
     posts: Array<PostType>
+    newPostText: string
 }
 
 export type DialogsPageType = {
@@ -25,11 +35,10 @@ export type DialogsPageType = {
 
 }
 
-type SidebarType = {}
-
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    /*siteBar:FriendsType*/
 }
 
 let rerenderEntireTree = () => {
@@ -66,7 +75,7 @@ let state: StateType = {
 
 }
 
-window.state = state
+/*window.state = state*/
 
 
 export const addPost = () => {
@@ -77,15 +86,15 @@ export const addPost = () => {
     }
     state.profilePage.posts.push(newPost);
     state.profilePage.newPostText = ""
-    rerenderEntireTree(state)
+    rerenderEntireTree()
 }
 
-export const updateNewPostText = (newText) => {
+export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText
-    rerenderEntireTree(state)
+    rerenderEntireTree()
 }
 
-export const subscribe = (observer) => {
+export const subscribe = (observer: ()=>void) => {
     rerenderEntireTree = observer
 }
 
