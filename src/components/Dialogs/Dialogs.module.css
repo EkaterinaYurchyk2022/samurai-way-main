@@ -12,6 +12,22 @@
     color: gold;
 }
 
+.dialogAva {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background: rgba(7, 116, 46, 0.95);
+    text-align: center;
+    color: rgba(227, 214, 214, 0.95);
+    margin: 5px 10px 0 0;
+    line-height: 30px;
+}
+
+.dialogName {
+    display: inline-block;
+}
+
 .messages {
     padding: 10px;
 }

@@ -6,21 +6,21 @@ const Navbar: React.FC = () => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
-                <NavLink to="/profile" activeClassName={s.activeLink}>Profile</NavLink>
+                <NavLink to="/profile" className={({isActive})=> isActive ? s.activeLink : s.item}>Profile</NavLink>
             </div>
             <div className={`${s.item} ${s.active}`}>
-                <NavLink to="/dialogs" activeClassName={s.activeLink}>Messages</NavLink>
+                <NavLink to="/dialogs" className={({isActive})=> isActive ? s.activeLink : s.item}>Messages</NavLink>
             </div>
 
             <div className={s.item}>
-                <NavLink to="/news" activeClassName={s.activeLink}>News</NavLink>
+                <NavLink to="/news" className={({isActive})=> isActive ? s.activeLink : s.item}>News</NavLink>
             </div>
 
             <div className={s.item}>
-                <NavLink to="/music" activeClassName={s.activeLink}>Music</NavLink>
+                <NavLink to="/music" className={({isActive})=> isActive ? s.activeLink : s.item}>Music</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/settings" activeClassName={s.activeLink}>Settings</NavLink>
+                <NavLink to="/settings" className={({isActive})=> isActive ? s.activeLink : s.item}>Settings</NavLink>
                 <a>Profile</a>
             </div>
             <div className={`${s.item} ${s.active}`}>
