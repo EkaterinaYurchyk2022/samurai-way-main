@@ -92,7 +92,7 @@ const store: StoreType = {
                 {id: 4, message: "Yo"},
                 {id: 5, message: "Yo"}
             ],
-            newMessageBody: ""
+            newMessageBody:" "
         },
        /* sidebar: 'hello'*/
     },
