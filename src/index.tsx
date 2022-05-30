@@ -4,25 +4,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {HashRouter} from "react-router-dom";
+import {Provider} from "react-redux";
 
 
-let rerenderEntireTree = () => {
 
     ReactDOM.render(
         <HashRouter>
-            <App
-                dispatch={store.dispatch.bind(store)}
-                state={store.getState()}
-
-            />
+            <Provider store={store}>
+                <App/>
+            </Provider>
         </HashRouter>,
         document.getElementById('root')
-    );
-}
+    )
 
-rerenderEntireTree()
 
-store.subscribe(() => {
-    rerenderEntireTree()
-})
+
+
+
+
+
 
