@@ -2,9 +2,11 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialodItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsPropsType} from "./DialogsContainer";
-import {Navigate} from "react-router-dom";
+
 import {InitialStateType} from "../../redux/dialogs-reducer";
+import {Field, reduxForm} from "redux-form";
+import {AddMessageForm} from "./AddMessageForm/AddMessageForm";
+
 
 
 /*type DialogsPagePropsType = {
@@ -28,15 +30,11 @@ const Dialogs = (props: PropsType) => {
 
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
     let messagesElements = state.messages.map(m => <Message message={m.message} key={m.id}/>)
+
     let addNewMessage = (values: NewMessageFormValuesType) => {
         props.sendMessage(values.newMessageBody)
     }
-
-  /*  let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.target.value
-        props.updateNewMessageBody(body)
-    }
-    if (!props.isAuth) return <Navigate to="/login"/>*/
+    if (!props.isAuth) return <Navigate to="/login"/>
 
     return (
         <div className={s.dialogs}>
@@ -46,10 +44,10 @@ const Dialogs = (props: PropsType) => {
             <div className={s.messages}>
                 <div>{messagesElements}</div>
             </div>
-           {/*does not exist yet*/}
-            <AddMessageForm onSubmit={addNewMessage}/>
+            <AddMessageFormRedux onSubmit={addNewMessage}/>
         </div>
     )
 }
 
+const AddMessageFormRedux = reduxForm({form: "dialogAddMessageForm"})(AddMessageForm)
 export default Dialogs
