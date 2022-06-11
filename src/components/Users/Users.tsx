@@ -2,12 +2,23 @@ import React from 'react';
 import s from "./users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import {NavLink} from "react-router-dom";
+import {UserType} from "../../redux/users-reducer";
 
 
-const Users = (props: any) => {
+type PropsType = {
+    users: Array<UserType>
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    followingInProgress: number[]
+}
 
+const Users: React.FC<PropsType> = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    let pages = []
+    let pages:number[] = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
@@ -16,7 +27,7 @@ const Users = (props: any) => {
         <div>
             <div>
                 {pages.map(p => {
-                    return <span className={props.currentPage === p && s.selectedPage} onClick={() => {
+                    return <span key={p} className={props.currentPage === p && s.selectedPage} onClick={() => {
                         props.onPageChanged(p)
                     }}>{p}</span>
                 })}
@@ -28,7 +39,9 @@ const Users = (props: any) => {
                     <span>
                         <div>
                             <NavLink to={'/profile' + u.id}>
-                            <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.userPhoto}/>
+                            <img src={u.photos.small != null ? u.photos.small : userPhoto}
+                                 alt={`user's avatar`}
+                                 className={s.userPhoto}/>
                                 </NavLink>
                         </div>
                         <div>
@@ -45,7 +58,7 @@ const Users = (props: any) => {
                         <span>
                             <span>
                             <div>
-                                {u.fullName}
+                                {u.name}
                             </div>
                             <div>
                                 {u.status}

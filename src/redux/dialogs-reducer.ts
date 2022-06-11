@@ -1,13 +1,6 @@
-import {InferActionsTypes} from './redux-store';
-
-type DialogType = {
-    id: number
-    name: string
-}
-type MessageType = {
-    id: number
-    message: string
-}
+import {ActionsTypes} from './redux-store';
+import {DialogsType} from '../components/Dialogs/DialogItem/DialogItem';
+import {MessageType} from '../components/Dialogs/Message/Message';
 
 let initialState = {
     dialogs: [
@@ -17,7 +10,7 @@ let initialState = {
         {id: 4, name: 'Sasha'},
         {id: 5, name: 'Viktor'},
         {id: 6, name: 'Valera'}
-    ] as Array<DialogType>,
+    ] as Array<DialogsType>,
     messages: [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How is your it-kamasutra?'},
@@ -27,10 +20,12 @@ let initialState = {
     ] as Array<MessageType>
 }
 
+export type InitialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+
     switch (action.type) {
-        case 'SN/DIALOGS/SEND_MESSAGE':
+        case 'SEND-MESSAGE':
             let body = action.newMessageBody;
             return {
                 ...state,
@@ -41,12 +36,13 @@ const dialogsReducer = (state = initialState, action: ActionsType): InitialState
     }
 }
 
+export type ActionsDialogsTypes = ReturnType<typeof sendMessageAC>
 
-export const actions = {
-    sendMessage: (newMessageBody:string)=>({type:'SN/DIALOGS/SEND_MESSAGE', newMessageBody} as const)
+export const sendMessageAC = (newMessageBody: string) => {
+    return {
+        type: 'SEND-MESSAGE',
+        newMessageBody
+    } as const
 }
 
-
-export default dialogsReducer
-export type InitialStateType = typeof initialState
-type ActionsType = InferActionsTypes<typeof actions>
+export default dialogsReducer;

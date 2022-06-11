@@ -1,39 +1,30 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 import s from './Navbar.module.css';
+import {NavLink} from 'react-router-dom';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
     return (
         <nav className={s.nav}>
-            <div className={s.item}>
-                <NavLink to="/profile" className={({isActive})=> isActive ? s.activeLink : s.item}>Profile</NavLink>
-            </div>
             <div className={`${s.item} ${s.active}`}>
-                <NavLink to="/dialogs" className={({isActive})=> isActive ? s.activeLink : s.item}>Messages</NavLink>
-            </div>
-
-            <div className={s.item}>
-                <NavLink to="/news" className={({isActive})=> isActive ? s.activeLink : s.item}>News</NavLink>
-            </div>
-
-            <div className={s.item}>
-                <NavLink to="/music" className={({isActive})=> isActive ? s.activeLink : s.item}>Music</NavLink>
+                <NavLink to={'/profile'} activeClassName={s.activeLink}>Profile</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/settings" className={({isActive})=> isActive ? s.activeLink : s.item}>Settings</NavLink>
-                <a>Profile</a>
-            </div>
-            <div className={`${s.item} ${s.active}`}>
-                <a>Messages</a>
+                <NavLink to={'/dialogs'} activeClassName={s.activeLink}>Messages</NavLink>
             </div>
             <div className={s.item}>
-                <a>News</a>
+                <NavLink to={'/users'} activeClassName={s.activeLink}>Users</NavLink>
             </div>
             <div className={s.item}>
-                <a>Music</a>
+                <NavLink to={'/news'} activeClassName={s.activeLink}>News</NavLink>
             </div>
             <div className={s.item}>
-                <a>Settings</a>
+                <NavLink to={'/music'} activeClassName={s.activeLink}>Music</NavLink>
+            </div>
+            <div className={s.item}>
+                <NavLink
+                    to={'/settings'}
+                    activeClassName={s.activeLink}
+                >Settings</NavLink>
             </div>
         </nav>
     );

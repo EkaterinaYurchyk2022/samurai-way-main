@@ -1,82 +1,72 @@
-import {authAPI} from "../api/api";
+import {ActionsTypes} from './redux-store';
+import {authAPI} from '../api/api';
+import {ThunkDispatchType, ThunkType} from './users-reducer';
+import {FormAction, stopSubmit} from 'redux-form';
 
-export const SET_USER_DATA = 'SET_USER_DATA'
+const SET_USER_DATA = 'SET_USER_DATA'
 
-
-export type UserType = {
-    id: number,
-    followed: boolean,
-    fullName: string,
-    status: string,
-    location: locationType
-    photoUrl: string
-
-}
-
-type locationType = {
-    city: string,
-    country: string
-}
-const initialState: InitialStateType = {
+let initialState: authStateType = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
-
+    isAuth: false,
 }
 
-export type InitialStateType = {
-    userId: any
-    email: any
-    login: any
-    isAuth: boolean
-
+export type authStateType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean,
 }
 
-type authReducerACType = ReturnType<typeof authReducerAC>
-
-
-
-type ActionType =
-    authReducerACType
-
-
-export const authReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+const authReducer = (state: authStateType = initialState, action: ActionsTypes): authStateType => {
     switch (action.type) {
-        case 'SET_USER_DATA':
+        case SET_USER_DATA:
             return {
                 ...state,
-                ...action.payload,
-                isAuth: true
+                ...action.payload
             }
-
         default:
-            return state
+            return state;
     }
-
 }
 
-export const authReducerAC = (userId: number, email:string, login: string) => {
-    return {
-        type: SET_USER_DATA,
-        payload: {
-            userId,
-            email,
-            login
-        }
-    } as const
-}
+export type ActionsAuthTypes = ReturnType<typeof setAuthUserData>
 
-export const getUserData=()=>(dispatch)=>{
+export const setAuthUserData = (userId: number | null, email: string | null, login: | null, isAuth: boolean) => ({
+    type: SET_USER_DATA,
+    payload: {userId, email, login, isAuth}
+}) as const
+
+export const getAuthUserData = (): ThunkType => (dispatch: ThunkDispatchType) => {
     authAPI.me()
         .then(response => {
-            if(response.data.resultCode===0){
-                let {id, email, login}=response.data.data
-                dispatch(authReducerAC(id, email, login))
+            if (response.data.resultCode === 0) {
+                let {id, email, login} = response.data.data
+                dispatch(setAuthUserData(id, email, login, true))
             }
-
-        })
-
+        });
 }
 
-export default authReducer
+export const login = (email: string, password: string, rememberMe: boolean): ThunkType<FormAction> => dispatch => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            } else {
+                let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+                dispatch(stopSubmit('login', {_error: message}));
+            }
+        });
+}
+
+export const logout = (): ThunkType => (dispatch: ThunkDispatchType) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthUserData(null, null, null, false))
+            }
+        });
+}
+
+export default authReducer;

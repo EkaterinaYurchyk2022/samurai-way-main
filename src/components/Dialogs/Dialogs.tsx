@@ -1,40 +1,30 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
-import DialogItem from "./DialodItem/DialogItem";
-import Message from "./Message/Message";
+import DialogItem, {DialogsType} from './DialogItem/DialogItem';
+import Message, {MessagePropsType} from './Message/Message';
+import {Redirect} from 'react-router-dom';
+import {AddMessageFormRedux} from './AddMessageForm/AddMessageForm';
 
-import {InitialStateType} from "../../redux/dialogs-reducer";
-import {Field, reduxForm} from "redux-form";
-import {AddMessageForm} from "./AddMessageForm/AddMessageForm";
-
-
-
-/*type DialogsPagePropsType = {
-    state: DialogsPageType
-    dispatch: (action: ActionsType)=>void
-    store:StoreType
-
-}*/
-type PropsType = {
-    dialogsPage: InitialStateType
-    sendMessage: (messageText: string) => void
-}
-export type NewMessageFormValuesType = {
+type DialogsPageType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagePropsType>
     newMessageBody: string
+    sendMessage: (values: string) => void
+    isAuth: boolean
 }
 
+const Dialogs = (props: DialogsPageType) => {
 
-const Dialogs = (props: PropsType) => {
-    const state = props.dialogsPage
+    let dialogsElements = props.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.avatar}/>);
 
+    let messagesElements = props.messages.map(m => <Message key={m.id} id={m.id} message={m.message}/>);
 
-    let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
-    let messagesElements = state.messages.map(m => <Message message={m.message} key={m.id}/>)
-
-    let addNewMessage = (values: NewMessageFormValuesType) => {
-        props.sendMessage(values.newMessageBody)
+    let addNewMessage = (values: { newMessageBody: string }) => {
+        props.sendMessage(values.newMessageBody);
+        values.newMessageBody = '';
     }
-    if (!props.isAuth) return <Navigate to="/login"/>
+
+    if (!props.isAuth) return <Redirect to={'/login'}/>;
 
     return (
         <div className={s.dialogs}>
@@ -43,11 +33,11 @@ const Dialogs = (props: PropsType) => {
             </div>
             <div className={s.messages}>
                 <div>{messagesElements}</div>
+                <AddMessageFormRedux onSubmit={addNewMessage}/>
             </div>
-            <AddMessageFormRedux onSubmit={addNewMessage}/>
         </div>
-    )
-}
+    );
+};
 
-const AddMessageFormRedux = reduxForm({form: "dialogAddMessageForm"})(AddMessageForm)
-export default Dialogs
+
+export default Dialogs;

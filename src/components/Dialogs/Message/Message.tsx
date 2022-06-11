@@ -1,11 +1,12 @@
 import React from 'react';
 import s from './Message.module.css'
 
-type PropsType = {
+ export type MessageType = {
+    id: number
     message: string
 }
 
-const Message = (props: PropsType) => {
+const Message = (props: MessageType) => {
     return (
         <div className={s.message}>
             {props.message}

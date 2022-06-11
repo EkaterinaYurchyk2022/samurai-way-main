@@ -1,20 +1,24 @@
 import React from 'react';
 import s from './Post.module.css';
 
-type PostPropsType = {
+export type PostsType = {
+    id: number
     message: string
-    likesCounts: number
+    likesCount: number
 }
-const Post = (props: PostPropsType) => {
-         return (
+
+const Post = (props: PostsType) => {
+
+    return (
             <div className={s.item}>
                 <img
-                    src='http://beloweb.ru/wp-content/uploads/2014/03/Artists-Series-Thomas-Hawk-1.jpeg'/>
-                {props.message}
+                    src={'http://beloweb.ru/wp-content/uploads/2014/03/Artists-Series-Thomas-Hawk-1.jpeg'} alt={'ava'}/>
+                { props.message }
                 <div>
-                    <span> like</span> {props.likesCounts}
+                    <span>like</span> { props.likesCount }
                 </div>
             </div>
-        );
-  };
-    export default Post;
+    );
+}
+
+export default Post;

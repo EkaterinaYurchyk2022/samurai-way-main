@@ -7,3 +7,9 @@
 .formControl .error span {
     color: red;
 }
+
+.formSubmitError{
+    border: solid red 1px;
+    padding: 5px;
+    color: red;
+}
