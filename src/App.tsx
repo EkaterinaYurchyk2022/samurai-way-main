@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import s from'./App.module.css';
 import Navbar from './components/Navbar/Navbar';
 import {Route, withRouter} from 'react-router-dom';
 import News from './components/News/News';
@@ -14,7 +14,8 @@ import {connect} from 'react-redux';
 import {RootStateType} from './redux/redux-store';
 import {compose} from 'redux';
 import {initializeApp} from './redux/app-reducer';
-import Preloader from './components/common/Preloader/Preloader';
+import Preloader from "./components/common/Preloader/Preloader";
+
 
 type MapStatePropsType = {
     initialized: boolean,
@@ -39,10 +40,10 @@ class App extends React.Component<AppPropsType> {
         }
 
         return (
-            <div className={'app-wrapper'}>
+            <div className={s.appWrapper}>
                 <HeaderContainer/>
                 <Navbar/>
-                <div className={'app-wrapper-content'}>
+                <div className={s.appWrapperContent}>
                     <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                     <Route path="/profile/:userId?"
                            render={() => <ProfileContainer/>}/>

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 import {RootStateType} from '../../redux/redux-store';
-import style from '../common/FormsControls/FormControls.module.css'
+import style from '../common/FormsControls/FormsControls.module.css'
 
 type FormDataType = {
     email: string

@@ -1,6 +1,7 @@
 import {ActionsTypes} from './redux-store';
 import {DialogsType} from '../components/Dialogs/DialogItem/DialogItem';
 import {MessageType} from '../components/Dialogs/Message/Message';
+import {v1} from "uuid";
 
 let initialState = {
     dialogs: [
@@ -12,11 +13,11 @@ let initialState = {
         {id: 6, name: 'Valera'}
     ] as Array<DialogsType>,
     messages: [
-        {id: 1, message: 'Hi'},
-        {id: 2, message: 'How is your it-kamasutra?'},
-        {id: 3, message: 'Yo'},
-        {id: 4, message: 'Yo'},
-        {id: 5, message: 'Yo'}
+        {id: v1(), message: 'Hi'},
+        {id: v1(), message: 'How is your it-kamasutra?'},
+        {id: v1(), message: 'Yo'},
+        {id: v1(), message: 'Yo'},
+        {id: v1(), message: 'Yo'}
     ] as Array<MessageType>
 }
 
@@ -29,7 +30,7 @@ const dialogsReducer = (state: InitialStateType = initialState, action: ActionsT
             let body = action.newMessageBody;
             return {
                 ...state,
-                messages: [...state.messages, {id: 6, message: body}]
+                messages: [...state.messages, {id: v1(), message: body}]
             };
         default:
             return state;
